@@ -3,49 +3,55 @@
 #define SIZE 15
 #define WALL '#'
 #define TREASURE 'T'
-#define HEALTH PACK 'H'
+#define HEALTH 'H'
 #define KEY 'K'
-#define LOCK DOOR 'D'
+#define DOOR 'D'
 
 char map[SIZE][SIZE];
 
-void initializemap()
+void initializeMap()
 {
-	for(int i=0; i<SIZE; i++){
-		for(int j=0; j<SIZE; j++){
-			map[i][j] = ' ';
-		}
-	}
+
+    for(int i=0;i<SIZE;i++)
+    {
+        for(int j=0;j<SIZE;j++)
+        {
+            map[i][j] = ' ';
+        }
+    }
 }
 
-void createborders()
+void createBorders()
 {
-	for(int i=0; i<SIZE; i++){
-		map[0][i] = '#';
-		map[SIZE-1][i] = '#';
-		map[i][0] = '#';
-		map[i][SIZE-1] = '#';
-	}
+
+    for(int i=0;i<SIZE;i++)
+    {
+        map[0][i] = '#';
+        map[SIZE-1][i] = '#';
+        map[i][0] = '#';
+        map[i][SIZE-1] = '#';
+    }
 }
 
-void printmap()
+void printMap()
 {
-        for(int i=0; i<SIZE; i++){
-                for(int j=0; j<SIZE; j++)
-		{
-			if(map[i][j] == ' ')
-				printf(". ");
-			else
-			        printf("%c ",map[i][i]);
-		}
-                printf("\n");
-	}
+
+    for(int i=0;i<SIZE;i++)
+    {
+        for(int j=0;j<SIZE;j++)
+        {
+            printf("%c ", map[i][j]);
+        }
+
+        printf("\n");
+    }
 }
 
 int main()
 {
-	initializemap();
-	createborders();
-	printmap();
-	return 0;
+    initializeMap();
+    createBorders();
+    printMap();
+
+    return 0;
 }
