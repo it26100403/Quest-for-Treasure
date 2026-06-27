@@ -15,31 +15,35 @@ typedef struct
     int health;
     int score;
     int keys;
-    char symbols;
+    char symbol;
 } Player;
 
 Player player1;
 Player player2;
 
 void initializeMap();
-void placewalls();
+void placeWalls();
 void placeTreasure();
 void placeHealthPack();
 void placeKeys();
 void placeDoors();
 void placeTraps();
+void initializePlayers();
+void placePlayers();
 void printMap();
 
 int main()
 {
     srand(time(NULL));
     initializeMap();
-    placewalls();
+    placeWalls();
     placeTreasure();
     placeHealthPack();
     placeKeys();
     placeDoors();
     placeTraps();
+    initializePlayers();
+    placePlayers();
     printMap();
 
     return 0;
@@ -54,6 +58,7 @@ void initializeMap()
         for(col = 0; col < SIZE; col++)
         {
             map[row][col] = ' ';
+            Trap[row][col] = 0;
         }
     }
     // Border walls
@@ -72,7 +77,7 @@ void initializeMap()
 
 }
 
-void placewalls()
+void placeWalls()
 {
     int row, col;
     int count = 0;
@@ -165,20 +170,74 @@ void placeDoors()
 
 void placeTraps()
 {
-	int row, col;
-	int count = 0;
+    int row, col;
+    int count =0;
 
-	while(count<10)
-	{
-	    row = rand() % SIZE;
-	    col = rand() % SIZE;
+    while(count<10)
+    {
+        row = rand() % SIZE;
+        col = rand() % SIZE;
 
-	    if(map[row][col] == ' ' && Trap[row][col] == 0)
-	    {
-		    Trap[row][col] = 1;
-		    count++;
-	    }
-	}
+        if(map[row][col] == ' ' && Trap[row][col] == 0)
+        {
+            Trap[row][col] = 1;
+            count++;
+        }
+    }
+}
+
+void initializePlayers()
+{
+    printf("Enter Player 1 Name: ");
+    scanf("%s", player1.name);
+
+    printf("Enter Player 2 Name: ");
+    scanf("%s", player2.name);
+
+    player1.health = 100;
+    player1.score = 0;
+    player1.keys = 0;
+    player1.symbol = '1';
+
+    player2.health = 100;
+    player2.score = 0;
+    player2.keys = 0;
+    player2.symbol = '2';
+}
+
+void placePlayers()
+{
+    int row, col;
+
+    // Place Player 1
+    while(1)
+    {
+        row = rand() % SIZE;
+        col = rand() % SIZE;
+
+        if(map[row][col] == ' ')
+        {
+            player1.row = row;
+            player1.col = col;
+            map[row][col] = player1.symbol;
+            break;
+        }
+    }
+
+    // Place Player 2
+    while(1)
+    {
+        row = rand() % SIZE;
+        col = rand() % SIZE;
+
+        if(map[row][col] == ' ')
+        {
+            player2.row = row;
+            player2.col = col;
+            map[row][col] = player2.symbol;
+            break;
+        }
+    }
 }
 
 void printMap()
@@ -189,7 +248,14 @@ void printMap()
     {
         for(col = 0; col < SIZE; col++)
         {
-            printf("%c ", map[row][col]);
+            if(map[row][col] == ' ')
+            {
+                printf(". ");
+            }
+            else
+            {
+                printf("%c ", map[row][col]);
+            }
         }
 
         printf("\n");
