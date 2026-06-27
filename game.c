@@ -5,6 +5,21 @@
 #define SIZE 15
 
 char map[SIZE][SIZE];
+int Trap[SIZE][SIZE];
+
+typedef struct
+{
+    char name[50];
+    int row;
+    int col;
+    int health;
+    int score;
+    int keys;
+    char symbols;
+} Player;
+
+Player player1;
+Player player2;
 
 void initializeMap();
 void placewalls();
@@ -12,6 +27,7 @@ void placeTreasure();
 void placeHealthPack();
 void placeKeys();
 void placeDoors();
+void placeTraps();
 void printMap();
 
 int main()
@@ -23,6 +39,7 @@ int main()
     placeHealthPack();
     placeKeys();
     placeDoors();
+    placeTraps();
     printMap();
 
     return 0;
@@ -145,6 +162,25 @@ void placeDoors()
         }
     }
 }
+
+void placeTraps()
+{
+	int row, col;
+	int count = 0;
+
+	while(count<10)
+	{
+	    row = rand() % SIZE;
+	    col = rand() % SIZE;
+
+	    if(map[row][col] == ' ' && Trap[row][col] == 0)
+	    {
+		    Trap[row][col] = 1;
+		    count++;
+	    }
+	}
+}
+
 void printMap()
 {
     int row, col;
